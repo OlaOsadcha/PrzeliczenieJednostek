@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application Title="PrzeliczenieJednostek">
+  <Options>
+    <LayoutManagerOptions RequiredFieldMark="*" />
+  </Options>
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="20.1.7.0" IsNewNode="True" />
+  </SchemaModules>
+  <Views>
+    <DetailView Id="ParametryPodazy_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="ParametryPodazy" RelativeSize="30.202578268876611">
+              <LayoutGroup Id="ParametryPodazy_col1" RelativeSize="99.353796445880448" Caption="ParametryPodazy_col1">
+                <LayoutItem Id="Parametr" RelativeSize="29.032258064516128" />
+                <LayoutGroup Id="Auto28f54913-dc76-4c0d-8ef7-a357b1785b68" ShowCaption="False" Caption="" Direction="Horizontal" Index="1" RelativeSize="20.967741935483872" IsNewNode="True">
+                  <LayoutItem Id="IloscWagowa" ViewItem="IloscWagowa" Index="0" RelativeSize="32.520325203252035" IsNewNode="True" />
+                  <LayoutItem Id="JednostkaWagowa" ViewItem="JednostkaWagowa" Index="1" RelativeSize="67.479674796747972" IsNewNode="True" />
+                </LayoutGroup>
+                <LayoutItem Id="IloscWagowa" Index="1" RelativeSize="20.967741935483872" Removed="True" />
+                <LayoutGroup Id="Auto00146b34-9d8a-4ca6-802c-ae89b05cde27" ShowCaption="False" Caption="" Index="2" RelativeSize="50" IsNewNode="True">
+                  <LayoutGroup Id="Auto03b4b5cb-92b6-4c4f-9b2c-5e56381c5c6e" ShowCaption="False" Caption="" Direction="Horizontal" Index="0" RelativeSize="41.935483870967744" IsNewNode="True">
+                    <LayoutItem Id="IloscMolowa" ViewItem="IloscMolowa" Index="0" RelativeSize="32.520325203252035" IsNewNode="True" />
+                    <LayoutItem Id="JednostkaMolowa" ViewItem="JednostkaMolowa" Index="1" RelativeSize="67.479674796747972" IsNewNode="True" />
+                  </LayoutGroup>
+                  <LayoutGroup Id="Autof2a39f48-578c-4a23-b87d-a7f9c1e3c4fc" ShowCaption="False" Caption="" Direction="Horizontal" Index="1" RelativeSize="58.064516129032256" IsNewNode="True">
+                    <LayoutItem Id="Ilosc" ViewItem="Ilosc" Index="0" RelativeSize="32.520325203252035" IsNewNode="True" />
+                    <LayoutItem Id="Jednostka" ViewItem="Jednostka" Index="1" RelativeSize="67.479674796747972" IsNewNode="True" />
+                  </LayoutGroup>
+                </LayoutGroup>
+                <LayoutItem Id="Ilosc" Index="3" RelativeSize="17.333333333333332" Removed="True" />
+                <LayoutItem Id="Jednostka" Index="4" RelativeSize="24" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="ParametryPodazy_col2" RelativeSize="0.64620355411954766" Caption="ParametryPodazy_col2">
+                <LayoutItem Id="IloscMolowa" RelativeSize="29.032258064516128" Index="0" Removed="True" />
+                <LayoutItem Id="JednostkaMolowa" RelativeSize="100" Index="0" Removed="True" />
+                <LayoutItem Id="JednostkaWagowa" RelativeSize="29.032258064516128" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" RelativeSize="69.797421731123393">
+              <LayoutItem Id="Oid" RelativeSize="100" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>
