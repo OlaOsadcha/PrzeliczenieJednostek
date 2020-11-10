@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="PrzeliczenieJednostek">
+  <BOModel>
+    <Class Name="PrzeliczenieJednostek.Module.BusinessObjects.ParametryPodazy">
+      <OwnMembers>
+        <Member Name="Ilosc" DisplayFormat="{0:N2}" />
+        <Member Name="IloscMolowa" DisplayFormat="{0:N2}" />
+        <Member Name="IloscWagowa" DisplayFormat="{0:N2}" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
   <Options>
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>

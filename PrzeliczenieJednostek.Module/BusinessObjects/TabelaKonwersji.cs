@@ -15,7 +15,6 @@ namespace PrzeliczenieJednostek.Module.BusinessObjects
         public TabelaKonwersji(Session session) : base(session)
         { }
 
-
         JednostkaLicznosci jednostkaLicznosci;
         JednostkaWagi jednostkaWagi;
 

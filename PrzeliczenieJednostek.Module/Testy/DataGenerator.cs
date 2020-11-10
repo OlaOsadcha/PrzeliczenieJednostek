@@ -34,12 +34,12 @@ namespace PrzeliczenieJednostek.Module.Testy
             var mg = objectSpace.CreateObject<JednostkaWagi>();
             mg.JM = "mg";
             mg.JednostkaBazowa = gram;
-            mg.Przelicznik = 0.001m;
+            mg.Przelicznik = 1000m;
 
             var mikrog = objectSpace.CreateObject<JednostkaWagi>();
             mikrog.JM = "μg";
             mikrog.JednostkaBazowa = gram;
-            mikrog.Przelicznik = 0.000001m;
+            mikrog.Przelicznik = 1000000m;
 
             var mol = objectSpace.CreateObject<JednostkaLicznosci>();
             mol.JM = "mol";
@@ -49,12 +49,12 @@ namespace PrzeliczenieJednostek.Module.Testy
             var mmol = objectSpace.CreateObject<JednostkaLicznosci>();
             mmol.JM = "mmol";
             mmol.JednostkaBazowa = mol;
-            mmol.Przelicznik = 0.001m;
+            mmol.Przelicznik = 1000m;
 
             var micromol = objectSpace.CreateObject<JednostkaLicznosci>();
             micromol.JM = "μmol";
             micromol.JednostkaBazowa = mol;
-            micromol.Przelicznik = 0.000001m;
+            micromol.Przelicznik = 1000000m;
 
             var molgram = objectSpace.CreateObject<TabelaKonwersji>();
             molgram.JednostkaLicznosci = mol;
