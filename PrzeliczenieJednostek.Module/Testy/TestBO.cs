@@ -5,6 +5,7 @@ using DevExpress.ExpressApp.Xpo;
 using DevExpress.Xpo;
 using NUnit.Framework;
 using PrzeliczenieJednostek.Module.BusinessObjects;
+using PrzeliczenieJednostek.Module.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,7 +74,7 @@ namespace PrzeliczenieJednostek.Module.Testy
             var kalkulacja = objectSpace.CreateObject<ParametryPodazy>();
             var mmol = objectSpace.FindObject<JednostkaLicznosci>(new BinaryOperator(nameof(JednostkaLicznosci.JM), "mmol"));
             var mol = objectSpace.FindObject<JednostkaLicznosci>(new BinaryOperator(nameof(JednostkaLicznosci.JM), "mol"));
-            var przekonwertowaneWartosci = kalkulacja.GetPrzeliczonaJednostka(0.005m, mol);
+            var przekonwertowaneWartosci = PrzeliczenieJednostekHelper.GetPrzeliczonaJednostka(0.005m, mol);
 
             var tuple = new Tuple<JednostkaMiary, decimal>(mmol, 5);
             Assert.AreEqual(tuple, przekonwertowaneWartosci);

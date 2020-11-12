@@ -109,6 +109,7 @@
     <Compile Include="BusinessObjects\ParametryPodazy.cs" />
     <Compile Include="BusinessObjects\TabelaKonwersji.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
+    <Compile Include="Helpers\PrzeliczenieJednostekHelper.cs" />
     <Compile Include="Module.cs">
       <SubType>Component</SubType>
     </Compile>
