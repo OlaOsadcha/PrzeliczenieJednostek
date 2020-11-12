@@ -12,14 +12,16 @@ namespace PrzeliczenieJednostek.Module.Helpers
 {
    public static class PrzeliczenieJednostekHelper
     {
-        public static decimal SetIloscMolowaPodczasZmianyJednostki(decimal iloscWagowa, Parametr parametr, JednostkaWagi jednostkaWagowa, JednostkaLicznosci jednostkaMolowa)
+        public static decimal SetIloscMolowaPodczasZmianyJednostki(decimal iloscWagowa, Parametr parametr, decimal jednostkaWagowa, decimal jednostkaMolowa)
         {
-            return iloscWagowa / parametr.LiczbaMolowa / jednostkaWagowa.Przelicznik * jednostkaMolowa.Przelicznik;
+            decimal wynik = iloscWagowa / parametr.LiczbaMolowa / jednostkaWagowa * jednostkaMolowa;
+            return wynik;
         }
 
-        public static decimal SetIloscWagowaPodczasZmianyJednostki(decimal iloscMolowa, Parametr parametr, JednostkaWagi jednostkaWagowa, JednostkaLicznosci jednostkaMolowa)
+        public static decimal SetIloscWagowaPodczasZmianyJednostki(decimal iloscMolowa, Parametr parametr, decimal jednostkaWagowa, decimal jednostkaMolowa)
         {
-            return iloscMolowa * parametr.LiczbaMolowa * jednostkaWagowa.Przelicznik / jednostkaMolowa.Przelicznik; 
+            decimal wynik = iloscMolowa * parametr.LiczbaMolowa * jednostkaWagowa / jednostkaMolowa;
+            return wynik;
         }
 
         public static Tuple<decimal, JednostkaMiary> SetIloscMolowa(JednostkaMiary JednostkaWagowa, JednostkaMiary JednostkaMolowa, Session session, decimal iloscWagowa, Parametr parametr)

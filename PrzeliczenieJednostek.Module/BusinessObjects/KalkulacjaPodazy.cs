@@ -17,28 +17,18 @@ namespace PrzeliczenieJednostek.Module.BusinessObjects
     {
         private JednostkaMiary jednostka;
         ////private PelnaKalkulacja kalkulacja;
-        ////private Parametr parametr;
-        private string parametr;
+        private Parametr parametr;
+       
         private decimal podazEnteralna;
         private decimal podazParenteralna;
         private decimal podazPlanowana;
         private decimal podazPlanowanaKg;
-        private string jednostkaPrzeliczeniowa;
-        private bool przeliczanieJednostki = false;
-        private JednostkaMiary nowaJednostka;
-        private decimal nowyPrzelicznik = 1;
+        private JednostkaMiary jednostkaPrzeliczeniowa;      
 
         public KalkulacjaPodazy(Session session) : base(session)
         {
         }
-
-        [XafDisplayName("Nazwa parametru")]
-        public string Parametr
-        {
-            get => this.parametr;            
-            set => SetPropertyValue(nameof(Parametr), ref parametr, value);
-        }
-
+      
         [Index(5)]
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
         ///[ModelDefault(nameof(IModelCommonMemberViewItem.AllowEdit), "false")]
@@ -66,13 +56,12 @@ namespace PrzeliczenieJednostek.Module.BusinessObjects
         ////    set => SetPropertyValue(nameof(Kalkulacja), ref kalkulacja, value);
         ////}
 
-        ////[Index(0)]
-        ////[ImmediatePostData]
-        ////public Parametr Parametr
-        ////{
-        ////    get => parametr;
-        ////    set => SetPropertyValue(nameof(Parametr), ref parametr, value);
-        ////}       
+        [Index(0)]
+        public Parametr Parametr
+        {
+            get => parametr;
+            set => SetPropertyValue(nameof(Parametr), ref parametr, value);
+        }
 
         [XafDisplayName("Podaż entralna")]
         [Index(2)]
@@ -150,10 +139,10 @@ namespace PrzeliczenieJednostek.Module.BusinessObjects
                     decimal wartosc = PodazParenteralna / Jednostka.Przelicznik;
                     return wartosc;
                 }
-                ////if (Jednostka is JednostkaWagi && Parametr?.MasaMolowa > 0)
-                ////{
-                ////    return PodazParenteralna / Parametr.MasaMolowa * 1000 / Jednostka.Przelicznik;
-                ////}
+                if (Jednostka is JednostkaWagi && Parametr?.LiczbaMolowa > 0)
+                {
+                    return PodazParenteralna / Parametr.LiczbaMolowa * 1000 / Jednostka.Przelicznik;
+                }
                 return 0;
             }
         }
@@ -169,10 +158,10 @@ namespace PrzeliczenieJednostek.Module.BusinessObjects
                     decimal wartosc = PodazParenteralna / Jednostka.Przelicznik;                  
                     return wartosc;
                 }
-                ////if (Jednostka is JednostkaLicznosci && Parametr?.MasaMolowa > 0)
-                ////{
-                ////    return PodazParenteralna / Jednostka.Przelicznik * Parametr.MasaMolowa / 1000;
-                ////}
+                if (Jednostka is JednostkaLicznosci && Parametr?.LiczbaMolowa > 0)
+                {
+                    return PodazParenteralna / Jednostka.Przelicznik * Parametr.LiczbaMolowa / 1000;
+                }
                 return 0;
             }
         }
@@ -183,22 +172,17 @@ namespace PrzeliczenieJednostek.Module.BusinessObjects
         {
             get
             {
-                ////if (this.Parametr != null)
-                ////{
-                ////    bool liczycWgMoli = Parametr.Jednostka is JednostkaLicznosci;
-                ////    if (liczycWgMoli)
-                ////    {
-                ////        return WartoscWmmol;// StezenieJonow / 1000 * Parametr.Jednostka.Przelicznik;// 1000 bo przeliczamy z mikromoli na milimole
-                ////    }
-                ////    else
-                ////    {
-                ////        return WartoscWgram; // /Jednostka.Przelicznik;
-                ////    }
-                ////}
-
                 if (this.Parametr != null)
-                {  
-                    return this.WartoscWmmol;                    
+                {
+                    bool liczycWgMoli = Parametr.JednostkaBazowa is JednostkaLicznosci;
+                    if (liczycWgMoli)
+                    {
+                        return WartoscWmmol;// StezenieJonow / 1000 * Parametr.Jednostka.Przelicznik;// 1000 bo przeliczamy z mikromoli na milimole
+                    }
+                    else
+                    {
+                        return WartoscWgram; // /Jednostka.Przelicznik;
+                    }
                 }
                 return 0;
             }
@@ -206,29 +190,23 @@ namespace PrzeliczenieJednostek.Module.BusinessObjects
 
         [XafDisplayName("Jednostka przeliczeniowa")]
         [VisibleInListView(false)]
-        public string JednostkaPrzeliczeniowa
+        public JednostkaMiary JednostkaPrzeliczeniowa
         {
-            get => jednostkaPrzeliczeniowa;
-            set => SetPropertyValue(nameof(JednostkaPrzeliczeniowa), ref jednostkaPrzeliczeniowa, value);
+            get
+            {
+                if (this.Parametr != null)
+                {
+                    jednostkaPrzeliczeniowa = Parametr.JednostkaBazowa;
+                }
+                return jednostkaPrzeliczeniowa;
+            }
         }
 
         internal void PrzeliczPodazPlanowana()
         {
-            //  podazPlanowana = PodazPlanowanaKg * Kalkulacja.MasaCialaWKg;
+           // podazPlanowana = PodazPlanowanaKg * Kalkulacja.MasaCialaWKg;
             WyliczPodazParenteralna();
-        }
-
-        ////protected override void OnChanged(string propertyName, object oldValue, object newValue)
-        ////{
-        ////    base.OnChanged(propertyName, oldValue, newValue);
-        ////    if (!IsLoading && !IsSaving && propertyName == nameof(this.Jednostka))
-        ////    {
-        ////        if (Math.Round(this.WartoscPrzeliczona, 2).Equals(0))
-        ////        {
-        ////            this.Jednostka = this.GetPrzeliczonaJednostka(this.WartoscPrzeliczona);
-        ////        }
-        ////    }
-        ////}
+        }       
 
         private void WyliczPodazParenteralna()
         {
@@ -238,64 +216,6 @@ namespace PrzeliczenieJednostek.Module.BusinessObjects
             ////    Kalkulacja.UstawPlanowanaPodazParenteralna(Parametr, PodazParenteralna, Jednostka);
             ////}         
 
-        }
-
-        ////private decimal PrzeliczanieJednostkiMiary(decimal wartoscPrzeliczona)
-        ////{
-        ////    decimal zero = 0;
-        ////    decimal round = Math.Round(wartoscPrzeliczona, 2);
-        ////    decimal value = wartoscPrzeliczona;
-        ////    if (wartoscPrzeliczona != 0)
-        ////    {
-        ////        if (this.PodazPlanowana != 0 || this.PodazPlanowanaKg != 0)
-        ////        {
-        ////            if (round.Equals(zero))
-        ////            {
-        ////                decimal przelicznik = this.Jednostka.Przelicznik;
-        ////                var wszystkieJednostkiPochodne = this.Jednostka.JednostkaBazowa.JednostkiPochodne;
-        ////                var getJednostka = wszystkieJednostkiPochodne.Where(x => x.Przelicznik < przelicznik).FirstOrDefault();
-        ////                decimal nowyPrzelicznik = getJednostka.Przelicznik / przelicznik;
-        ////                value = wartoscPrzeliczona / nowyPrzelicznik;
-        ////              //  this.jednostka = getJednostka;
-        ////            }
-        ////        }
-        ////    }
-        ////    return value;
-        ////}
-
-        private JednostkaMiary GetPrzeliczonaJednostka(decimal wartoscPrzeliczona)
-        {
-            decimal zero = 0;
-            decimal round = Math.Round(wartoscPrzeliczona, 2);
-            decimal value = wartoscPrzeliczona;
-            JednostkaMiary newJednostka = null;
-            if (wartoscPrzeliczona != 0)
-            {
-                if (this.PodazPlanowana != 0 || this.PodazPlanowanaKg != 0)
-                {
-                    if (round.Equals(zero))
-                    {                       
-                        decimal przelicznik = this.Jednostka.Przelicznik;
-                        XPCollection<JednostkaMiary> wszystkieJednostkiPochodne = this.Jednostka.JednostkaBazowa.JednostkiPochodne;
-                        var wszystkiePasujaceJednostki = wszystkieJednostkiPochodne.Where(x => x.Przelicznik < przelicznik);
-                        foreach (var item in wszystkiePasujaceJednostki)
-                        {
-                            decimal nowyPrzelicznik = item.Przelicznik / przelicznik;
-                            value = wartoscPrzeliczona / nowyPrzelicznik;
-                            if (value > 0)
-                            {
-                                newJednostka = item;
-                                //newPrzelicznik = nowyPrzelicznik;
-                                break;
-                            }
-                        }
-
-                        ////decimal nowyPrzelicznik = getJednostka.Przelicznik / przelicznik;
-                        ////value = wartoscPrzeliczona / nowyPrzelicznik;
-                    }
-                }
-            }
-            return newJednostka;
-        }
+        }       
     }
 }

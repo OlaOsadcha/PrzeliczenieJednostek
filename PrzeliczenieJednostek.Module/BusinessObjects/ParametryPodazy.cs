@@ -72,11 +72,12 @@ namespace PrzeliczenieJednostek.Module.BusinessObjects
                     if (Parametr != null)
                     {
                        var przeliczoneJednostki = PrzeliczenieJednostekHelper.SetIloscMolowa(this.JednostkaWagowa, this.JednostkaMolowa, this.Session,
-                            this.iloscWagowa, this.Parametr);
+                            this.IloscWagowa, this.Parametr);
                         if (przeliczoneJednostki.Item2 != null)
                         {
-                            this.iloscMolowa = przeliczoneJednostki.Item1;
                             this.jednostkaMolowa = przeliczoneJednostki.Item2 as JednostkaLicznosci;
+                            this.iloscMolowa = przeliczoneJednostki.Item1;
+                            this.OnChanged(nameof(this.IloscMolowa));
                         }
                     }              
                 }
@@ -92,7 +93,7 @@ namespace PrzeliczenieJednostek.Module.BusinessObjects
               bool modified = SetPropertyValue(nameof(JednostkaWagowa), ref jednostkaWagowa, value);
                 if (!this.IsLoading && !this.IsSaving && modified && this.JednostkaMolowa != null && this.JednostkaWagowa != null)
                 {
-                    this.IloscWagowa = PrzeliczenieJednostekHelper.SetIloscWagowaPodczasZmianyJednostki(this.IloscMolowa, this.Parametr, this.JednostkaWagowa, this.JednostkaMolowa);
+                    this.IloscWagowa = PrzeliczenieJednostekHelper.SetIloscWagowaPodczasZmianyJednostki(this.IloscMolowa, this.Parametr, this.JednostkaWagowa.Przelicznik, this.JednostkaMolowa.Przelicznik);
                 }
             }
         }
@@ -110,9 +111,10 @@ namespace PrzeliczenieJednostek.Module.BusinessObjects
                     if (Parametr != null)
                     {
                        var przeliczoneJednostki = PrzeliczenieJednostekHelper.SetIloscWagowa(this.JednostkaMolowa, this.JednostkaWagowa, 
-                            this.Session, this.Parametr, this.iloscMolowa);
+                            this.Session, this.Parametr, this.IloscMolowa);                        
                         this.iloscWagowa = przeliczoneJednostki.Item1;
                         this.jednostkaWagowa = przeliczoneJednostki.Item2 as JednostkaWagi;
+                        this.OnChanged(nameof(this.JednostkaWagowa));
                     }                  
                 }
             }
@@ -127,9 +129,9 @@ namespace PrzeliczenieJednostek.Module.BusinessObjects
                bool modified = SetPropertyValue(nameof(JednostkaMolowa), ref jednostkaMolowa, value);
                 if (!this.IsLoading && !this.IsSaving && modified && this.JednostkaMolowa != null && this.JednostkaWagowa != null)
                 {
-                    this.IloscMolowa = PrzeliczenieJednostekHelper.SetIloscMolowaPodczasZmianyJednostki(this.IloscWagowa, this.Parametr, this.JednostkaWagowa, this.JednostkaMolowa);
+                    this.IloscMolowa = PrzeliczenieJednostekHelper.SetIloscMolowaPodczasZmianyJednostki(this.IloscWagowa, this.Parametr, this.JednostkaWagowa.Przelicznik, this.JednostkaMolowa.Przelicznik);
                 }
             }
-        }           
+        }     
     }
 }
